@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#1a1a2e"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TIC TAC TOE"
+        android:textSize="36sp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prêt à jouer ?"
+        android:textSize="16sp"
+        android:textColor="#c792ea"
+        android:layout_marginBottom="30dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_background"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choisissez votre symbole"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginBottom="10dp"/>
+
+        <RadioGroup
+            android:id="@+id/symbolGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+
+            <RadioButton
+                android:id="@+id/radioX"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:text="X"
+                android:textSize="24sp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/radio_selector_x"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_marginEnd="10dp"/>
+
+            <RadioButton
+                android:id="@+id/radioO"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:text="O"
+                android:textSize="24sp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/radio_selector_o"
+                android:button="@null"
+                android:gravity="center"/>
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre de parties"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginBottom="10dp"/>
+
+        <RadioGroup
+            android:id="@+id/gamesGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+
+            <RadioButton
+                android:id="@+id/radio5"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:text="5"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/radio_selector_games"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_marginEnd="10dp"/>
+
+            <RadioButton
+                android:id="@+id/radio10"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:text="10"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/radio_selector_games"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_marginEnd="10dp"/>
+
+            <RadioButton
+                android:id="@+id/radio15"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:text="15"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/radio_selector_games"
+                android:button="@null"
+                android:gravity="center"/>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/playButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text=" Jouer"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_play"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/principleButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text=" Principe du jeu"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_principle"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/scoresButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Retrouver les scores"
+        android:textSize="14sp"
+        android:textColor="#c792ea"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
