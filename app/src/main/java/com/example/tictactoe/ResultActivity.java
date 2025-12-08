@@ -6,8 +6,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -53,10 +51,8 @@ public class ResultActivity extends AppCompatActivity {
     private void saveTournament(String winner) {
         try {
             TournamentData data = new TournamentData(scoreX, scoreO, draws, totalGames, winner);
-            FileOutputStream fos = openFileOutput("tournament_data.ser", MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(data);
-            oos.close();
+            GameHistoryManager historyManager = new GameHistoryManager(this);
+            historyManager.saveTournament(data);
             Toast.makeText(this, "Tournoi sauvegardé!", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(this, "Erreur de sauvegarde", Toast.LENGTH_SHORT).show();

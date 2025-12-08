@@ -9,8 +9,6 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Button playButton = findViewById(R.id.playButton);
         Button principleButton = findViewById(R.id.principleButton);
         Button scoresButton = findViewById(R.id.scoresButton);
+        Button onlineButton = findViewById(R.id.onlineButton);
 
         // Par défaut X est sélectionné
         symbolGroup.check(R.id.radioX);
@@ -55,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
         principleButton.setOnClickListener(v -> showPrinciple());
 
         scoresButton.setOnClickListener(v -> loadAndDisplayScores());
+        
+        if (onlineButton != null) {
+            onlineButton.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, OnlineGameActivity.class);
+                startActivity(intent);
+            });
+        }
     }
 
     private void showPrinciple() {
@@ -69,67 +75,76 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    // REMPLACEZ cette méthode loadAndDisplayScores()
+    // Enhanced method to display all game history
     private void loadAndDisplayScores() {
-        TournamentData tournamentData = getSavedTournamentData();
-        TournamentHistory gamesHistory = getGamesHistory();
+        GameHistoryManager historyManager = new GameHistoryManager(this);
+        AllGamesHistory allHistory = historyManager.loadAllGamesHistory();
+        TournamentData tournamentData = historyManager.loadTournamentData();
+        GameStatistics stats = historyManager.getStatistics();
 
+        if (allHistory == null || allHistory.getTotalGames() == 0) {
+            Toast.makeText(this, "Aucune partie sauvegardée", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        StringBuilder message = new StringBuilder();
+        
+        // Statistics section
+        message.append("=== STATISTIQUES GÉNÉRALES ===\n");
+        message.append("Total parties: ").append(stats.getTotalGames()).append("\n");
+        message.append("Parties locales: ").append(stats.getLocalGames()).append("\n");
+        message.append("Parties en ligne: ").append(stats.getOnlineGames()).append("\n\n");
+        
+        // Local tournament results
         if (tournamentData != null) {
-            StringBuilder message = new StringBuilder();
-            message.append("=== RÉSULTAT FINAL ===\n");
+            message.append("=== DERNIER TOURNOI LOCAL ===\n");
             message.append("Score X: ").append(tournamentData.getScoreX()).append("\n");
             message.append("Score O: ").append(tournamentData.getScoreO()).append("\n");
             message.append("Parties nulles: ").append(tournamentData.getDraws()).append("\n");
-            message.append("Total parties: ").append(tournamentData.getTotalGames()).append("\n");
             message.append("Vainqueur: ").append(tournamentData.getWinner()).append("\n\n");
-
-            if (gamesHistory != null) {
-                message.append("=== DÉTAILS DES PARTIES ===\n");
-                for (GameData game : gamesHistory.getGames()) {
-                    message.append("Partie ").append(game.getGameNumber()).append(": ");
-                    if (game.getWinner().equals("Draw")) {
-                        message.append("Match nul\n");
-                    } else {
-                        message.append("Victoire de ").append(game.getWinner()).append("\n");
-                    }
+        }
+        
+        // Online games statistics
+        if (stats.getOnlineGames() > 0) {
+            message.append("=== STATISTIQUES EN LIGNE ===\n");
+            message.append("Victoires: ").append(stats.getOnlineWins()).append("\n");
+            message.append("Défaites: ").append(stats.getOnlineLosses()).append("\n");
+            message.append("Matchs nuls: ").append(stats.getOnlineDraws()).append("\n\n");
+        }
+        
+        // Recent games (last 10)
+        message.append("=== DERNIÈRES PARTIES ===\n");
+        int count = 0;
+        for (GameData game : allHistory.getGames()) {
+            if (count >= 10) break;
+            
+            if (game.isOnlineGame()) {
+                message.append("🌐 En ligne - ID: ").append(game.getGameId()).append("\n");
+                message.append("   ").append(game.getFormattedDate()).append("\n");
+                if (game.getWinner().equals("Draw")) {
+                    message.append("   Match nul");
+                } else if (game.getWinner().equals(game.getPlayerSymbol())) {
+                    message.append("   ✅ Victoire (").append(game.getPlayerSymbol()).append(")");
+                } else {
+                    message.append("   ❌ Défaite (vous: ").append(game.getPlayerSymbol()).append(")");
+                }
+            } else {
+                message.append("📱 Partie ").append(game.getGameNumber());
+                if (game.getWinner().equals("Draw")) {
+                    message.append(": Match nul");
+                } else {
+                    message.append(": Victoire de ").append(game.getWinner());
                 }
             }
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Scores du dernier tournoi");
-            builder.setMessage(message.toString());
-            builder.setPositiveButton("OK", null);
-            builder.show();
-        } else {
-            Toast.makeText(this, "Aucun tournoi sauvegardé", Toast.LENGTH_SHORT).show();
+            message.append("\n\n");
+            count++;
         }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Historique des parties");
+        builder.setMessage(message.toString());
+        builder.setPositiveButton("OK", null);
+        builder.show();
     }
 
-    // AJOUTEZ cette méthode GET pour récupérer les données du tournoi
-    private TournamentData getSavedTournamentData() {
-        try {
-            FileInputStream fis = openFileInput("tournament_data.ser");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            TournamentData data = (TournamentData) ois.readObject();
-            ois.close();
-            fis.close();
-            return data;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    // AJOUTEZ cette méthode GET pour récupérer l'historique de toutes les parties
-    private TournamentHistory getGamesHistory() {
-        try {
-            FileInputStream fis = openFileInput("games_history.ser");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            TournamentHistory history = (TournamentHistory) ois.readObject();
-            ois.close();
-            fis.close();
-            return history;
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }

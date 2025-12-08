@@ -10,8 +10,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TIC TAC TOE"
-        android:textSize="36sp"
+        android:text="ONLINE MULTIPLAYER"
+        android:textSize="32sp"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:layout_marginBottom="10dp"/>
@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Prêt à jouer ?"
+        android:text="Jouez avec un ami en ligne"
         android:textSize="16sp"
         android:textColor="#c792ea"
         android:layout_marginBottom="30dp"/>
@@ -29,7 +29,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/rounded_background"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:layout_marginBottom="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,14 +41,14 @@
             android:layout_marginBottom="10dp"/>
 
         <RadioGroup
-            android:id="@+id/symbolGroup"
+            android:id="@+id/onlineSymbolGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="20dp">
 
             <RadioButton
-                android:id="@+id/radioX"
+                android:id="@+id/onlineRadioX"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_weight="1"
@@ -60,7 +61,7 @@
                 android:layout_marginEnd="10dp"/>
 
             <RadioButton
-                android:id="@+id/radioO"
+                android:id="@+id/onlineRadioO"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_weight="1"
@@ -81,14 +82,27 @@
             android:layout_marginBottom="10dp"/>
 
         <RadioGroup
-            android:id="@+id/gamesGroup"
+            android:id="@+id/onlineGamesGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="20dp">
 
             <RadioButton
-                android:id="@+id/radio5"
+                android:id="@+id/onlineRadio1"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:text="1"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/radio_selector_games"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_marginEnd="10dp"/>
+
+            <RadioButton
+                android:id="@+id/onlineRadio5"
                 android:layout_width="0dp"
                 android:layout_height="55dp"
                 android:layout_weight="1"
@@ -101,7 +115,7 @@
                 android:layout_marginEnd="10dp"/>
 
             <RadioButton
-                android:id="@+id/radio10"
+                android:id="@+id/onlineRadio10"
                 android:layout_width="0dp"
                 android:layout_height="55dp"
                 android:layout_weight="1"
@@ -114,7 +128,7 @@
                 android:layout_marginEnd="10dp"/>
 
             <RadioButton
-                android:id="@+id/radio15"
+                android:id="@+id/onlineRadio15"
                 android:layout_width="0dp"
                 android:layout_height="55dp"
                 android:layout_weight="1"
@@ -127,43 +141,66 @@
         </RadioGroup>
 
         <Button
-            android:id="@+id/playButton"
+            android:id="@+id/createGameButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text=" Jouer"
+            android:text="Créer une partie"
             android:textSize="18sp"
             android:textColor="#FFFFFF"
             android:background="@drawable/button_play"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/gameIdDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="20sp"
+            android:textColor="#c792ea"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#c792ea"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rejoindre une partie"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
             android:layout_marginBottom="10dp"/>
 
-        <Button
-            android:id="@+id/principleButton"
+        <EditText
+            android:id="@+id/gameIdEditText"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text=" Principe du jeu"
+            android:layout_height="55dp"
+            android:hint="Entrez l'ID de la partie"
             android:textSize="18sp"
             android:textColor="#FFFFFF"
-            android:background="@drawable/button_principle"
-            android:layout_marginBottom="10dp"/>
-            
+            android:textColorHint="#888888"
+            android:background="@drawable/rounded_background"
+            android:padding="15dp"
+            android:inputType="text"
+            android:textAllCaps="true"
+            android:maxLength="8"
+            android:layout_marginBottom="15dp"/>
+
         <Button
-            android:id="@+id/onlineButton"
+            android:id="@+id/joinGameButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="🌐 Jouer en ligne"
+            android:text="Rejoindre"
             android:textSize="18sp"
             android:textColor="#FFFFFF"
             android:background="@drawable/button_play"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/scoresButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Retrouver les scores"
-        android:textSize="14sp"
-        android:textColor="#c792ea"
-        android:background="@android:color/transparent"
-        android:layout_marginTop="20dp"/>
-
 </LinearLayout>
+
+
